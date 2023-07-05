@@ -940,6 +940,7 @@ function Course:appendWaypoints(waypoints)
 end
 
 --- Append another course to the course
+---@param other Course
 function Course:append(other)
 	self:appendWaypoints(other.waypoints)
 end
