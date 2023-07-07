@@ -216,8 +216,8 @@ function CpCombineUnloaderJobParameters:isFieldUnloadDisabled()
     return self.useGiantsUnload:getValue()
 end
 
-function CpCombineUnloaderJobParameters:isUnloadStationSelectorDisabled()
-    return self:isGiantsUnloadDisabled() or not self.useGiantsUnload:getValue() 
+function CpCombineUnloaderJobParameters:isUnloadStationSelectorVisible()
+    return not self:isGiantsUnloadDisabled() and self.useGiantsUnload:getValue() 
 end
 
 function CpCombineUnloaderJobParameters:isFieldUnloadPositionSelectorDisabled()
@@ -228,7 +228,6 @@ end
 function CpCombineUnloaderJobParameters:isFieldUnloadTipSideDisabled()
     return self:isFieldUnloadDisabled() or self:hasPipe() or not self.useFieldUnload:getValue() 
 end
-
 
 function CpCombineUnloaderJobParameters:hasPipe()
     local vehicle = self.job:getVehicle()
@@ -350,7 +349,7 @@ function CpSiloLoaderJobParameters:isShovelSiloLoadDisabled()
 end
 
 function CpSiloLoaderJobParameters:isUnloadPositionDisabled()
-    return self:isShovelSiloLoadDisabled() or self.unloadAt == CpSiloLoaderJobParameters.UNLOAD_TRAILER
+    return false --self:isShovelSiloLoadDisabled() or self.unloadAt == CpSiloLoaderJobParameters.UNLOAD_TRAILER
 end
 
 function CpSiloLoaderJobParameters:isUnloadStationDisabled()
