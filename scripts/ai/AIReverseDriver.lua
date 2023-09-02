@@ -74,10 +74,8 @@ function AIReverseDriver:getDriveData()
 	-- vehicle's orientation than the direction node which often turns/moves with an articulated vehicle part
 	-- TODO: consolidate this with AITurn:getTurnNode() and if getAIDirectionNode() considers this already
 	local tractorNode
-	local useArticulatedAxisRotationNode = 
-		SpecializationUtil.hasSpecialization(ArticulatedAxis, self.vehicle.specializations) and self.vehicle.spec_articulatedAxis.rotationNode
-	if useArticulatedAxisRotationNode then
-		tractorNode = self.vehicle.spec_articulatedAxis.rotationNode
+	if self.vehicle.spec_articulatedAxis then
+		tractorNode = AIUtil.getArticulatedAxisVehicleReverserNode(self.vehicle)
 	else
 		tractorNode = self.vehicle:getAIDirectionNode()
 	end
