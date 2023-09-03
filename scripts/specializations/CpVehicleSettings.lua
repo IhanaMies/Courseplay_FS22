@@ -43,6 +43,7 @@ end
 
 function CpVehicleSettings.registerEvents(vehicleType)
     SpecializationUtil.registerEvent(vehicleType, 'onCpUserSettingChanged')
+    SpecializationUtil.registerEvent(vehicleType, 'onCpLoadingShovelOffsetSettingChanged')
 end
 
 
@@ -55,6 +56,7 @@ function CpVehicleSettings.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", CpVehicleSettings)
     SpecializationUtil.registerEventListener(vehicleType, "onStateChange", CpVehicleSettings)
     SpecializationUtil.registerEventListener(vehicleType, "onCpUserSettingChanged", CpVehicleSettings)
+    SpecializationUtil.registerEventListener(vehicleType, 'onCpLoadingShovelOffsetSettingChanged', CpVehicleSettings)
 end
 
 function CpVehicleSettings.registerFunctions(vehicleType)
@@ -394,6 +396,14 @@ end
 
 function CpVehicleSettings:isLoadingShovelOffsetSettingDisabled()
     return not AIUtil.isStopped(self)
+end
+
+function CpVehicleSettings:onCpLoadingShovelOffsetSettingChanged()
+    local shovels, found = AIUtil.getAllChildVehiclesWithSpecialization(self, Shovel)
+	if not found then 
+		return false
+	end
+    shovels[1]:cpSetTemporaryLoadingShovelState()
 end
 
 --- Saves the user value changed on the server.
